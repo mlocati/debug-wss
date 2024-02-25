@@ -16,6 +16,10 @@ internal class Program
         try
         {
             uri = new(args[0]);
+            if (uri.Scheme.ToLower() != "wss" && uri.Scheme.ToLower() != "ws")
+            {
+                throw new Exception($"{uri.Scheme} is an invalid scheme");
+            }
         }
         catch (Exception ex)
         {
