@@ -9,7 +9,7 @@ internal class Program
     {
         if (args == null || args.Length == 0)
         {
-            Console.WriteLine("Specifica l'url del websocket (wss://...)");
+            Console.WriteLine("Please specify the WebSocket URL (wss://...)");
             return 1;
         }
         Uri uri;
@@ -19,7 +19,7 @@ internal class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"L'url del websocket non è valido: {ex.Message}");
+            Console.WriteLine($"The WebSocket URL is not correct: {ex.Message}");
             return 1;
         }
         using ClientWebSocket ws = new();
@@ -27,11 +27,11 @@ internal class Program
         {
             if (certificate == null)
             {
-                Console.WriteLine("Nessun certificato");
+                Console.WriteLine("No certificate");
             }
             else
             {
-                Console.WriteLine($"Subject del certificato: {certificate.Subject}");
+                Console.WriteLine($"Certificate subject: {certificate.Subject}");
                 string dnsNames = "";
                 string ips = "";
                 if (certificate is X509Certificate2 certificate2)
@@ -60,11 +60,11 @@ internal class Program
                     }
                     if (dnsNames.Length == 0)
                     {
-                        dnsNames = "(nessuno)";
+                        dnsNames = "(none)";
                     }
                     if (ips.Length == 0)
                     {
-                        ips = "(nessuno)";
+                        ips = "(none)";
                     }
                     Console.WriteLine($"DSN alternative names: {dnsNames}");
                     Console.WriteLine($"IP alternative names: {ips}");
@@ -79,7 +79,7 @@ internal class Program
             var result = await ws.ReceiveAsync(bytes, default);
             string res = Encoding.UTF8.GetString(bytes, 0, result.Count);
             await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closed", default);
-            Console.WriteLine("Tutto ok");
+            Console.WriteLine("Everything seems ok");
             return 1;
         }
         catch (Exception ex)
